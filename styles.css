@@ -2230,6 +2230,12 @@ footer {
 @media (min-width: 414px) and (max-width: 580px) {
   /* Keep the dashboard attached to the bottom edge on large phones. */
   .dashboard-wrap picture { align-items: flex-end; }
+  .dashboard-wrap .browser-screen {
+    flex: 0 0 auto;
+    width: 118%;
+    max-width: none;
+    transform: translateY(-20px);
+  }
 }
 
 .wa-float {
