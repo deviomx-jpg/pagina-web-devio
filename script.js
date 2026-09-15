@@ -324,7 +324,10 @@ leadForm.addEventListener('submit', async (e) => {
   }
 
   function setStep(step) {
-    if (storyNearViewport && step + 1 < slides.length) void loadSlide(step + 1);
+    const nextSlide = slides[step + 1];
+    if (storyNearViewport && nextSlide && nextSlide.dataset.loaded !== 'true') {
+      void loadSlide(step + 1);
+    }
     if (step === current) {
       if (requested !== step) {
         requested = step;

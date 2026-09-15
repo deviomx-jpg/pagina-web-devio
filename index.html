@@ -16,10 +16,6 @@
   <meta name="twitter:image" content="https://deviomx.com/Assets/Logo/Logodevio.png" />
   <link rel="canonical" href="https://deviomx.com/" />
   <link rel="icon" href="Assets/Logo/Logoazul-rounded.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" /></noscript>
   <link rel="preload" href="Assets/Logo/imagotipo-clean.webp" as="image" type="image/webp" />
   <link
     rel="preload"
@@ -30,10 +26,10 @@
     imagesrcset="Assets/Dashboard/Dashboard2-768.webp 768w, Assets/Dashboard/Dashboard2-1024.webp 1024w, Assets/Dashboard/Dashboard2-1280.webp 1280w, Assets/Dashboard/Dashboard2.webp 1710w"
     imagesizes="(max-width: 580px) 100vw, (max-width: 900px) calc(100vw - 48px), (max-height: 820px) 900px, 1200px"
   />
+  <link rel="preload" href="Assets/Fonts/Montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="Assets/Fonts/PowerGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="dns-prefetch" href="https://formspree.io" />
-  <link rel="stylesheet" href="styles.css?v=4ec938bca1" />
-  <script src="script.js?v=8fe6da9cd9" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260915-12" />
+  <script src="script.js?v=20260915-9" defer></script>
   <script type="application/ld+json">
   [
     {
@@ -133,7 +129,7 @@
           Toda tu desarrolladora<br/>en <em>un solo lugar</em>
         </h1>
         <p class="hero-sub">
-          Devio centraliza ventas, clientes, inventario, pagos y avances de obra de uno o varios proyectos inmobiliarios, en una sola plataforma. Deja de administrar en hojas de cálculo y toma el control real de tu negocio.
+          Centraliza ventas, clientes, inventario, pagos y avances de obra en un solo lugar. Deja atrás las hojas de cálculo y toma el control de tu negocio.
         </p>
         <div class="hero-actions">
           <a href="#cta" class="btn btn-gold">
@@ -203,7 +199,7 @@
         </div>
       </div>
 
-      <div class="client-logos client-logo-group" data-client-logo-group aria-hidden="true">
+      <div class="client-logos client-logo-group client-logo-group--secondary" data-client-logo-group aria-hidden="true">
         <div class="client-logo">
           <picture>
             <source media="(max-width: 580px) and (max-resolution: 3dppx), (max-resolution: 2dppx)" srcset="Assets/Logos%20clientes/campero-desarrollador-480.webp" type="image/webp" />
@@ -230,6 +226,13 @@
             <source media="(max-width: 580px) and (max-resolution: 3dppx), (max-resolution: 2dppx)" srcset="Assets/Logos%20clientes/vaha-rincon-del-cielo-480.webp" type="image/webp" />
             <source srcset="Assets/Logos%20clientes/vaha-rincon-del-cielo.webp" type="image/webp" />
             <img src="Assets/Logos clientes/Logo VAHA.png" alt="VAHA Rincón del Cielo" width="2149" height="731" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="client-logo client-logo--mobile-only">
+          <picture>
+            <source media="(max-width: 580px) and (max-resolution: 3dppx), (max-resolution: 2dppx)" srcset="Assets/Logos%20clientes/main-street-la-americana-480.webp" type="image/webp" />
+            <source srcset="Assets/Logos%20clientes/main-street-la-americana.webp" type="image/webp" />
+            <img src="Assets/Logos clientes/ Logo MSLA.png" alt="Main Street La Americana" width="1764" height="891" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>
@@ -264,9 +267,10 @@
 </section>
 
 <section id="solution">
-  <div class="solution-bg"></div>
   <div class="container">
-    <div class="solution-grid">
+    <div class="solution-panel">
+      <div class="solution-bg"></div>
+      <div class="solution-grid">
       <div class="solution-content">
         <div class="tag light">La solución</div>
         <h2 class="section-title anim">Una plataforma.<br/>Todo bajo control.</h2>
@@ -335,6 +339,7 @@
             <div class="sol-card-sub">Porcentajes por etapa, fotos y actualizaciones semanales</div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
