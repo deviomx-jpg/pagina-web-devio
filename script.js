@@ -1,16 +1,26 @@
 const navbar = document.getElementById('navbar');
 const hero = document.getElementById('hero');
+const mobileMenu = document.getElementById('mobileMenu');
 let navbarRaf = 0;
 let navbarScrolled;
 let heroTransitionActive;
 let heroMotionVisible;
 let heroHeight = hero.offsetHeight;
+let lastScrollPosition = window.scrollY;
 function updateNavbar() {
   navbarRaf = 0;
   const scrollPosition = window.scrollY;
+  const scrollDelta = scrollPosition - lastScrollPosition;
   const nextState = scrollPosition > 30;
   const nextHeroTransition = scrollPosition > 1;
   const nextHeroMotion = scrollPosition < heroHeight;
+
+  if (scrollPosition <= 30 || scrollDelta < -2 || mobileMenu.classList.contains('open')) {
+    navbar.classList.remove('nav-hidden');
+  } else if (scrollDelta > 4) {
+    navbar.classList.add('nav-hidden');
+  }
+  lastScrollPosition = scrollPosition;
 
   if (nextHeroTransition !== heroTransitionActive) {
     heroTransitionActive = nextHeroTransition;
@@ -30,8 +40,10 @@ window.addEventListener('scroll', () => {
 updateNavbar();
 
 const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+  navbar.classList.remove('nav-hidden');
+});
 mobileMenu.addEventListener('click', (e) => {
   if (e.target.tagName === 'A') mobileMenu.classList.remove('open');
 });

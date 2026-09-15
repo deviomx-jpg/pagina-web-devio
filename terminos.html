@@ -14,7 +14,7 @@
   <style>
     .privacy-header {
       background: linear-gradient(145deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy3) 100%);
-      padding: 140px 0 0;
+      padding: 140px 0 48px;
       position: relative;
       overflow: hidden;
     }
@@ -30,7 +30,7 @@
     .privacy-header .tag { margin-bottom: 8px; }
     .privacy-header h1 {
       font-size: clamp(32px, 4vw, 52px);
-      font-weight: 800;
+      font-weight: 400;
       color: var(--white);
       letter-spacing: -0.03em;
       line-height: 1.1;
@@ -117,7 +117,7 @@
     .privacy-highlight p { margin-bottom: 0; }
     .privacy-highlight p + p { margin-top: 12px; }
     @media (max-width: 900px) {
-      .privacy-header { padding: 100px 0 0; }
+      .privacy-header { padding: 100px 0 32px; }
       .privacy-header .tag { margin-bottom: 6px; }
       .privacy-header h1 { margin-bottom: 0; }
       .privacy-body { padding: 0 0 80px; }
@@ -559,9 +559,26 @@
 </footer>
 
 <script>
+  const navbar = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  let navbarRaf = 0;
+  let lastScrollPosition = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (navbarRaf) return;
+    navbarRaf = requestAnimationFrame(() => {
+      navbarRaf = 0;
+      const scrollPosition = window.scrollY;
+      const scrollDelta = scrollPosition - lastScrollPosition;
+      if (scrollPosition <= 30 || scrollDelta < -2 || mobileMenu.classList.contains('open')) navbar.classList.remove('nav-hidden');
+      else if (scrollDelta > 4) navbar.classList.add('nav-hidden');
+      lastScrollPosition = scrollPosition;
+    });
+  }, { passive: true });
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    navbar.classList.remove('nav-hidden');
+  });
   mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') mobileMenu.classList.remove('open'); });
 </script>
 </body>

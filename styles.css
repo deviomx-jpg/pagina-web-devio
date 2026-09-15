@@ -33,6 +33,7 @@
   --noise-bg: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 html { scroll-behavior: smooth; }
+section[id], .privacy-content [id] { scroll-margin-top: 96px; }
 h1, h2, .form-title {
   font-family: 'PowerGrotesk', system-ui, sans-serif;
   font-weight: 400;
@@ -110,8 +111,9 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  transition: background-color .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  transition: transform .28s var(--ease), background-color .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
 }
+nav.nav-hidden { transform: translateY(-100%); }
 nav.scrolled {
   background: rgba(var(--navy-rgb), 0.90);
   backdrop-filter: blur(20px) saturate(180%);
@@ -129,6 +131,7 @@ nav.scrolled {
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  min-height: 44px;
   text-decoration: none;
 }
 .nav-logo img {
@@ -182,11 +185,15 @@ nav.scrolled {
 .hamburger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
 }
 .hamburger span {
   display: block;
@@ -204,12 +211,15 @@ nav.scrolled {
   backdrop-filter: blur(20px);
   padding: 24px;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
   z-index: 99;
   border-bottom: 1px solid rgba(var(--gold-rgb),0.07);
 }
 .mobile-menu.open { display: flex; }
 .mobile-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   color: rgba(var(--white-rgb),0.7);
   text-decoration: none;
   font-size: 16px;
@@ -1270,17 +1280,27 @@ section { padding: 112px 0; }
   font-size: 13.5px; color: rgba(var(--white-rgb),0.86); font-weight: 500;
 }
 .app-panel-feature svg { width: 15px; height: 15px; stroke: var(--green); flex-shrink: 0; }
-.story-dots { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+.story-dots { display: flex; gap: 0; align-items: center; margin-top: 12px; }
 .story-dot {
-  width: 6px; height: 6px; border-radius: 100px;
-  background: rgba(var(--white-rgb),0.42);
+  position: relative;
+  width: 44px; height: 44px; border-radius: 100px;
+  background: transparent;
   appearance: none;
   border: 0;
   padding: 0;
-  transition: background-color .45s var(--ease), width .45s var(--ease), box-shadow .45s var(--ease);
   cursor: pointer;
 }
-.story-dot.active { background: var(--gold); width: 22px; box-shadow: 0 0 8px rgba(var(--gold-rgb),0.35); }
+.story-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 100px;
+  background: rgba(var(--white-rgb),0.42);
+  transform: translate(-50%, -50%);
+  transition: background-color .45s var(--ease), width .45s var(--ease), box-shadow .45s var(--ease);
+}
+.story-dot.active::before { background: var(--gold); width: 22px; box-shadow: 0 0 8px rgba(var(--gold-rgb),0.35); }
 .story-dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .app-story-right {
   display: flex; justify-content: center; align-items: center;
@@ -1977,11 +1997,11 @@ footer {
   .hero-badge-dot { animation: none; }
 
   /* Hero */
-  #hero { min-height: 620px; padding: 90px 0 0; }
+  #hero { height: auto; min-height: 620px; padding: 90px 0 0; }
   .hero-grid { gap: 18px; text-align: center; }
   .hero-sub { max-width: 100%; }
   .hero-badge { justify-content: center; }
-  .dashboard-wrap { order: 1; flex: 1 1 auto; min-height: 0; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 14px 14px 0 0; }
+  .dashboard-wrap { order: 1; flex: 0 0 auto; min-height: 0; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 14px 14px 0 0; aspect-ratio: 1710 / 919; }
   .dashboard-wrap picture { height: calc(100% + 32px); transform: translateY(18px); }
   .dashboard-glow { display: none; }
 
@@ -2035,9 +2055,9 @@ footer {
   .app-story-panels { min-height: 0; width: 100%; }
   .app-panel { position: static; display: none; text-align: left; }
   .app-panel.active { display: block; }
-  .story-dots { justify-content: center; margin-top: 20px; gap: 12px; }
-  .story-dot { width: 10px; height: 10px; }
-  .story-dot.active { width: 28px; }
+  .story-dots { justify-content: center; margin-top: 20px; }
+  .story-dot::before { width: 10px; height: 10px; }
+  .story-dot.active::before { width: 28px; }
   .app-story-right { order: 1; width: 100%; min-height: 460px; }
   .phone-hand { top: calc(50% + 84px); left: calc(50% + 68px); width: 560px; }
   .phone-notification { width: 188px; min-height: 72px; padding: 9px 10px; }
@@ -2048,6 +2068,9 @@ footer {
   .phone-notification--announcement { right: max(-14px, calc(50% - 283px)); }
   .phone-notification--payment { right: max(-24px, calc(50% - 293px)); }
   .phone-device { width: 218px; height: 432px; }
+
+  /* Avoid automatic zoom when focusing fields in iOS Safari. */
+  .form-group input, .form-group select { font-size: 16px; }
 
   /* CTA */
   .cta-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -2089,10 +2112,11 @@ footer {
   .section-title { font-size: clamp(32px, 8vw, 40px); }
   .section-sub { font-size: 14px; }
   /* Hero */
+  #hero { height: 100svh; }
   .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
   .hero-actions .btn { text-align: center; justify-content: center; width: 100%; max-width: 280px; }
   .hero-sub { font-size: 13px; }
-  .dashboard-wrap { max-width: none; width: calc(100% + 48px); margin-left: -24px; margin-right: -24px; border-radius: 0; }
+  .dashboard-wrap { flex: 1 1 auto; max-width: none; width: calc(100% + 48px); margin-left: -24px; margin-right: -24px; border-radius: 0; aspect-ratio: auto; }
 
   /* Clientes */
   #stats { padding: 48px 0 36px; }
@@ -2236,6 +2260,8 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  nav { transition: none; }
+
   .client-logo-group,
   .client-logo-group.is-active,
   .client-logo-group.is-exiting,
