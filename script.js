@@ -1,9 +1,25 @@
 const navbar = document.getElementById('navbar');
+const hero = document.getElementById('hero');
 let navbarRaf = 0;
 let navbarScrolled;
+let heroTransitionActive;
+let heroMotionVisible;
+let heroHeight = hero.offsetHeight;
 function updateNavbar() {
   navbarRaf = 0;
-  const nextState = window.scrollY > 30;
+  const scrollPosition = window.scrollY;
+  const nextState = scrollPosition > 30;
+  const nextHeroTransition = scrollPosition > 1;
+  const nextHeroMotion = scrollPosition < heroHeight;
+
+  if (nextHeroTransition !== heroTransitionActive) {
+    heroTransitionActive = nextHeroTransition;
+    document.body.classList.toggle('hero-transition-active', nextHeroTransition);
+  }
+  if (nextHeroMotion !== heroMotionVisible) {
+    heroMotionVisible = nextHeroMotion;
+    hero.classList.toggle('motion-visible', nextHeroMotion);
+  }
   if (nextState === navbarScrolled) return;
   navbarScrolled = nextState;
   navbar.classList.toggle('scrolled', nextState);
@@ -69,32 +85,67 @@ const metricsObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 metricFills.forEach(el => metricsObserver.observe(el));
 
-function animateCounter(el) {
-  const target = parseInt(el.getAttribute('data-target'));
-  const duration = 1800;
-  const start = performance.now();
-  const step = (now) => {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const current = Math.round(eased * target);
-    el.textContent = current >= 1000 ? current.toLocaleString('es-MX') : current;
-    if (progress < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
-const counters = document.querySelectorAll('.counter');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounter(entry.target);
-      counterObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
-counters.forEach(el => counterObserver.observe(el));
+(function() {
+  const rotator = document.querySelector('.client-logo-rotator');
+  if (!rotator) return;
 
-const hero = document.getElementById('hero');
+  const groups = rotator.querySelectorAll('[data-client-logo-group]');
+  if (groups.length < 2) return;
+
+  let activeGroup = 0;
+  let intervalId = 0;
+  let cleanupId = 0;
+  let isVisible = false;
+
+  function showGroup(index) {
+    if (index === activeGroup) return;
+    const outgoingGroup = groups[activeGroup];
+    const incomingGroup = groups[index];
+    activeGroup = index;
+
+    if (cleanupId) clearTimeout(cleanupId);
+    outgoingGroup.classList.remove('is-active');
+    outgoingGroup.classList.add('is-exiting');
+    incomingGroup.classList.remove('is-exiting');
+    incomingGroup.classList.add('is-active');
+
+    groups.forEach((group, groupIndex) => {
+      const isActive = groupIndex === activeGroup;
+      group.setAttribute('aria-hidden', String(!isActive));
+    });
+
+    cleanupId = window.setTimeout(() => {
+      outgoingGroup.classList.remove('is-exiting');
+      cleanupId = 0;
+    }, 520);
+  }
+
+  function stopRotation() {
+    if (!intervalId) return;
+    clearInterval(intervalId);
+    intervalId = 0;
+  }
+
+  function startRotation() {
+    if (intervalId || !isVisible || document.hidden) return;
+    intervalId = window.setInterval(() => {
+      showGroup((activeGroup + 1) % groups.length);
+    }, 3500);
+  }
+
+  const rotatorObserver = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting;
+    if (isVisible) startRotation();
+    else stopRotation();
+  }, { threshold: 0.2 });
+  rotatorObserver.observe(rotator);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopRotation();
+    else startRotation();
+  });
+})();
+
 const circles = hero.querySelectorAll('.hero-circle');
 const heroMotionQuery = window.matchMedia('(min-width: 901px) and (pointer: fine)');
 let heroMotionActive = false;
@@ -102,6 +153,11 @@ let heroMotionRaf = 0;
 let heroRect;
 function updateHeroRect() {
   heroRect = hero.getBoundingClientRect();
+  const nextHeroHeight = hero.offsetHeight;
+  if (nextHeroHeight !== heroHeight) {
+    heroHeight = nextHeroHeight;
+    if (!navbarRaf) navbarRaf = requestAnimationFrame(updateNavbar);
+  }
 }
 function updateHeroParallax(e) {
   if (heroMotionRaf) return;
@@ -119,24 +175,22 @@ function syncHeroMotion() {
   heroMotionActive = shouldEnable;
   if (shouldEnable) {
     updateHeroRect();
-    window.addEventListener('resize', updateHeroRect, { passive: true });
     hero.addEventListener('mousemove', updateHeroParallax, { passive: true });
     return;
   }
-  window.removeEventListener('resize', updateHeroRect);
   hero.removeEventListener('mousemove', updateHeroParallax);
   if (heroMotionRaf) cancelAnimationFrame(heroMotionRaf);
   heroMotionRaf = 0;
 }
+window.addEventListener('resize', updateHeroRect, { passive: true });
 heroMotionQuery.addEventListener('change', syncHeroMotion);
 syncHeroMotion();
 
 const ambientMotionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => entry.target.classList.toggle('motion-visible', entry.isIntersecting));
 }, { rootMargin: '160px 0px' });
-[hero, document.getElementById('how')].forEach(section => {
-  if (section) ambientMotionObserver.observe(section);
-});
+const howSection = document.getElementById('how');
+if (howSection) ambientMotionObserver.observe(howSection);
 
 const leadForm = document.getElementById('leadForm');
 const formSuccess = document.getElementById('formSuccess');
@@ -233,9 +287,7 @@ leadForm.addEventListener('submit', async (e) => {
 
     if (source) {
       source.srcset = source.dataset.srcset;
-      if (source.dataset.sizes) source.sizes = source.dataset.sizes;
       delete source.dataset.srcset;
-      delete source.dataset.sizes;
     }
     image.src = image.dataset.src;
     delete image.dataset.src;
@@ -316,7 +368,6 @@ leadForm.addEventListener('submit', async (e) => {
     dot.addEventListener('focus', () => { void loadSlide(i); });
     dot.addEventListener('touchstart', () => { void loadSlide(i); }, { passive: true });
     dot.addEventListener('click', () => {
-      void loadSlide(i);
       setStep(i);
     });
   });
