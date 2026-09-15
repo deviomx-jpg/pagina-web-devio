@@ -912,10 +912,7 @@ section { padding: 112px 0; }
 
 #faq {
   padding: 88px 0 92px;
-  background-color: var(--gray);
-  background-image:
-    radial-gradient(ellipse at 0% 50%, rgba(var(--navy-rgb),.035) 0%, transparent 46%),
-    radial-gradient(ellipse at 100% 50%, rgba(var(--gold-rgb),.06) 0%, transparent 52%);
+  background: var(--white);
   border-top: 1px solid rgba(var(--navy-rgb),0.07);
 }
 .faq-shell {
