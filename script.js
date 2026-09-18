@@ -468,14 +468,22 @@ const circles = hero.querySelectorAll('.hero-circle');
 const heroMotionQuery = window.matchMedia('(min-width: 901px) and (pointer: fine)');
 let heroMotionActive = false;
 let heroMotionRaf = 0;
+let heroResizeRaf = 0;
 let heroRect;
 function updateHeroRect() {
   heroRect = hero.getBoundingClientRect();
-  const nextHeroHeight = hero.offsetHeight;
+  const nextHeroHeight = heroRect.height;
   if (nextHeroHeight !== heroHeight) {
     heroHeight = nextHeroHeight;
     if (!navbarRaf) navbarRaf = requestAnimationFrame(updateNavbar);
   }
+}
+function scheduleHeroRectUpdate() {
+  if (heroResizeRaf) return;
+  heroResizeRaf = requestAnimationFrame(() => {
+    heroResizeRaf = 0;
+    updateHeroRect();
+  });
 }
 function updateHeroParallax(e) {
   if (heroMotionRaf) return;
@@ -500,7 +508,7 @@ function syncHeroMotion() {
   if (heroMotionRaf) cancelAnimationFrame(heroMotionRaf);
   heroMotionRaf = 0;
 }
-window.addEventListener('resize', updateHeroRect, { passive: true });
+window.addEventListener('resize', scheduleHeroRectUpdate, { passive: true });
 heroMotionQuery.addEventListener('change', syncHeroMotion);
 syncHeroMotion();
 

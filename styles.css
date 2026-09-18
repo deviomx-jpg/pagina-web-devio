@@ -258,6 +258,7 @@ body > footer {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  contain: layout paint;
 }
 .hero-bg::after {
   content: '';
@@ -271,12 +272,13 @@ body > footer {
   position: absolute;
   inset: 0;
   opacity: .82;
+  contain: paint;
 }
 .hero-landscape svg {
   display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 .hero-landscape-layer,
 .hero-landscape-ridge {
