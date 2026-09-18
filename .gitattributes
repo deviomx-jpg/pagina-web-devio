@@ -1,0 +1,7 @@
+/.DS_Store export-ignore
+"/Claude MD/**" export-ignore
+"/Pagina Web Devio/**" export-ignore
+/.gitignore export-ignore
+/.vercelignore export-ignore
+/.netlifyignore export-ignore
+/.gitattributes export-ignore

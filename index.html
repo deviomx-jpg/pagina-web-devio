@@ -28,8 +28,8 @@
   />
   <link rel="preload" href="Assets/Fonts/Montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="Assets/Fonts/PowerGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=20260915-15" />
-  <script src="script.js?v=20260915-9" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260917-86" />
+  <script src="script.js?v=20260917-39" defer></script>
   <script type="application/ld+json">
   [
     {
@@ -458,11 +458,22 @@
           </div>
         </div><!-- /app-story-panels -->
 
-        <div class="story-dots" role="group" aria-label="Vistas de la app para compradores">
-          <button class="story-dot active" type="button" aria-label="Ver avance de obra" aria-pressed="true"></button>
-          <button class="story-dot" type="button" aria-label="Ver estado de cuenta" aria-pressed="false"></button>
-          <button class="story-dot" type="button" aria-label="Ver documentos y contratos" aria-pressed="false"></button>
-          <button class="story-dot" type="button" aria-label="Ver notificaciones" aria-pressed="false"></button>
+        <div class="app-story-actions">
+          <div class="app-download-badges" aria-label="Descargar la aplicación Devio">
+            <a href="https://apps.apple.com/us/app/devio/id6760320536" class="app-download-badge" target="_blank" rel="noopener" aria-label="Descargar Devio en App Store">
+              <img src="Assets/badge-appstore.svg" alt="Disponible en App Store" width="121" height="36" loading="lazy" decoding="async" />
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.deviomx.app&amp;hl=es_MX" class="app-download-badge" target="_blank" rel="noopener" aria-label="Descargar Devio en Google Play">
+              <img src="Assets/badge-googleplay.svg" alt="Disponible en Google Play" width="121" height="36" loading="lazy" decoding="async" />
+            </a>
+          </div>
+
+          <div class="story-dots" role="group" aria-label="Vistas de la app para compradores">
+            <button class="story-dot active" type="button" aria-label="Ver avance de obra" aria-pressed="true"></button>
+            <button class="story-dot" type="button" aria-label="Ver estado de cuenta" aria-pressed="false"></button>
+            <button class="story-dot" type="button" aria-label="Ver documentos y contratos" aria-pressed="false"></button>
+            <button class="story-dot" type="button" aria-label="Ver notificaciones" aria-pressed="false"></button>
+          </div>
         </div>
       </div>
 
@@ -637,135 +648,257 @@
       <p class="section-sub anim anim-delay-1">Módulos diseñados para el flujo real del negocio inmobiliario en México.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card feature-card--featured anim anim--scale">
-        <div class="feature-card-badge">Clave</div>
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      <div class="feature-card feature-card--featured feature-card--inventory anim anim--scale">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="feature-card-mockup inventory-mockup">
+              <img src="Assets/Mockups/Inventario1-768.webp" alt="Vista del inventario de unidades" width="768" height="454" loading="lazy" decoding="async" />
+              <span class="inventory-row-hotspot" aria-hidden="true" style="--inventory-delay: 500ms"></span>
+              <span class="inventory-row-hotspot" aria-hidden="true" style="--inventory-delay: 1100ms"></span>
+              <span class="inventory-row-hotspot" aria-hidden="true" style="--inventory-delay: 1700ms"></span>
+              <span class="inventory-row-hotspot" aria-hidden="true" style="--inventory-delay: 2300ms"></span>
+              <span class="inventory-row-hotspot" aria-hidden="true" style="--inventory-delay: 2900ms"></span>
+              <span class="inventory-total-hotspot" aria-hidden="true"></span>
+            </div>
+            <h3>Gestión de inventario</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-inventory-details" aria-hidden="true">
+            <h3>Gestión de inventario</h3>
+            <p>Catálogo completo de unidades con precios, tipologías, plantas y disponibilidad en tiempo real. Sin dobles ventas.</p>
+          </div>
         </div>
-        <h3>Gestión de inventario</h3>
-        <p>Catálogo completo de unidades con precios, tipologías, plantas y disponibilidad en tiempo real. Sin dobles ventas.</p>
       </div>
-      <div class="feature-card feature-card--featured anim anim--scale anim-delay-1">
-        <div class="feature-card-badge">Clave</div>
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <div class="feature-card feature-card--featured feature-card--analytics anim anim--scale anim-delay-1">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="analytics-mockup">
+              <img src="Assets/Mockups/Dashboardyanaliticas-tight-768.webp" alt="Dashboard ejecutivo de ventas, cobranza y cuentas por cobrar" width="768" height="455" loading="lazy" decoding="async" />
+              <svg class="analytics-mockup-animation" viewBox="72 104 1392 824" aria-hidden="true">
+                <rect class="analytics-number-cover" x="275" y="350" width="270" height="78" rx="8" />
+                <rect class="analytics-number-cover" x="710" y="350" width="255" height="78" rx="8" />
+                <rect class="analytics-number-cover" x="1135" y="350" width="250" height="78" rx="8" />
+                <text class="analytics-count analytics-count--metric" x="288" y="411" data-value="18.4" data-decimals="1" data-prefix="$" data-suffix=" M">$0.0 M</text>
+                <text class="analytics-count analytics-count--metric" x="720" y="411" data-value="2.8" data-decimals="1" data-prefix="$" data-suffix=" M">$0.0 M</text>
+                <text class="analytics-count analytics-count--metric" x="1145" y="411" data-value="3.6" data-decimals="1" data-prefix="$" data-suffix=" M">$0.0 M</text>
+
+                <rect class="analytics-bar-mask" x="224" y="684" width="44" height="130" rx="10" style="--bar-delay: 0ms" />
+                <rect class="analytics-bar-mask" x="270" y="768" width="42" height="46" rx="9" style="--bar-delay: 80ms" />
+                <rect class="analytics-bar-mask" x="349" y="658" width="44" height="156" rx="10" style="--bar-delay: 130ms" />
+                <rect class="analytics-bar-mask" x="395" y="751" width="42" height="63" rx="9" style="--bar-delay: 210ms" />
+                <rect class="analytics-bar-mask" x="475" y="638" width="44" height="176" rx="10" style="--bar-delay: 260ms" />
+                <rect class="analytics-bar-mask" x="521" y="735" width="42" height="79" rx="9" style="--bar-delay: 340ms" />
+                <rect class="analytics-bar-mask" x="601" y="581" width="44" height="233" rx="10" style="--bar-delay: 390ms" />
+                <rect class="analytics-bar-mask" x="647" y="713" width="42" height="101" rx="9" style="--bar-delay: 470ms" />
+                <rect class="analytics-bar-mask" x="726" y="625" width="44" height="189" rx="10" style="--bar-delay: 520ms" />
+                <rect class="analytics-bar-mask" x="772" y="741" width="42" height="73" rx="9" style="--bar-delay: 600ms" />
+                <rect class="analytics-bar-mask" x="852" y="604" width="44" height="210" rx="10" style="--bar-delay: 650ms" />
+                <rect class="analytics-bar-mask" x="898" y="719" width="42" height="95" rx="9" style="--bar-delay: 730ms" />
+
+                <circle class="analytics-ring-cover" cx="1204" cy="614" r="103" />
+                <circle class="analytics-ring-base" cx="1204" cy="614" r="84" />
+                <circle class="analytics-ring-progress" cx="1204" cy="614" r="84" />
+                <text class="analytics-count analytics-count--percent" x="1204" y="632" text-anchor="middle" data-value="82" data-decimals="0" data-suffix="%">0%</text>
+
+                <rect class="analytics-units-cover" x="1096" y="785" width="90" height="62" rx="8" />
+                <text class="analytics-count analytics-count--units" x="1108" y="835" data-value="12" data-decimals="0">0</text>
+              </svg>
+              <div class="analytics-interactions" aria-hidden="true">
+                <span class="analytics-export-hotspot analytics-export-hotspot--pdf"></span>
+                <span class="analytics-export-hotspot analytics-export-hotspot--excel"></span>
+
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$3.8 M" style="--bar-left: 10.9%; --bar-top: 70.4%; --bar-height: 15.9%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$1.2 M" style="--bar-left: 14.2%; --bar-top: 80.6%; --bar-height: 5.7%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$4.6 M" style="--bar-left: 19.9%; --bar-top: 67.2%; --bar-height: 19.1%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$1.8 M" style="--bar-left: 23.2%; --bar-top: 78.5%; --bar-height: 7.8%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$5.2 M" style="--bar-left: 29%; --bar-top: 64.8%; --bar-height: 21.5%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$2.3 M" style="--bar-left: 32.3%; --bar-top: 76.6%; --bar-height: 9.7%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$6.9 M" style="--bar-left: 38%; --bar-top: 57.9%; --bar-height: 28.4%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$2.9 M" style="--bar-left: 41.3%; --bar-top: 73.9%; --bar-height: 12.4%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$5.6 M" style="--bar-left: 47%; --bar-top: 63.2%; --bar-height: 23.1%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$2.1 M" style="--bar-left: 50.3%; --bar-top: 77.3%; --bar-height: 9%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--sales" data-tooltip="$6.2 M" style="--bar-left: 56%; --bar-top: 60.7%; --bar-height: 25.6%;"></span>
+                <span class="analytics-bar-hotspot analytics-bar-hotspot--collection" data-tooltip="$2.7 M" style="--bar-left: 59.3%; --bar-top: 74.6%; --bar-height: 11.7%;"></span>
+              </div>
+            </div>
+            <h3>Reportes y analítica</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-reports-details" aria-hidden="true">
+            <h3>Reportes y analítica</h3>
+            <p>Dashboards ejecutivos con ventas, cobranza y cuentas por cobrar. Exporta en PDF o Excel con un clic.</p>
+          </div>
         </div>
-        <h3>Reportes y analítica</h3>
-        <p>Dashboards ejecutivos con ventas, cobranza y cuentas por cobrar. Exporta en PDF o Excel con un clic.</p>
       </div>
-      <div class="feature-card feature-card--featured anim anim--scale anim-delay-2">
-        <div class="feature-card-badge">Clave</div>
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      <div class="feature-card feature-card--featured feature-card--mobile is-mobile-first-pending anim anim--scale anim-delay-2">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="mobile-feature-phone" data-mobile-feature data-active-screen="home">
+              <img class="mobile-feature-phone-base" src="Assets/Mockups/iphone-principal-480.webp" alt="" width="480" height="720" loading="lazy" decoding="async" aria-hidden="true" />
+              <img class="mobile-feature-splash" src="Assets/Mockups/iphone-pantalla-logo-480.webp" alt="Pantalla de inicio de Devio" width="480" height="720" loading="lazy" decoding="async" aria-hidden="true" />
+              <div class="mobile-feature-screens" aria-live="polite">
+                <div class="mobile-feature-screen mobile-feature-screen--home is-active" data-mobile-feature-screen="home" role="img" aria-label="Pantalla principal de la app móvil de Devio"></div>
+                <img class="mobile-feature-screen" data-mobile-feature-screen="account" src="Assets/Mockups/iphone-edc-480.webp" alt="Estado de cuenta en la app móvil de Devio" width="480" height="720" loading="lazy" decoding="async" aria-hidden="true" />
+                <img class="mobile-feature-screen" data-mobile-feature-screen="progress" src="Assets/Mockups/iphone-avances-480.webp" alt="Avances de obra en la app móvil de Devio" width="480" height="720" loading="lazy" decoding="async" aria-hidden="true" />
+                <img class="mobile-feature-screen" data-mobile-feature-screen="documents" src="Assets/Mockups/iphone-documentos-480.webp" alt="Documentos en la app móvil de Devio" width="480" height="720" loading="lazy" decoding="async" aria-hidden="true" />
+              </div>
+
+              <div class="mobile-feature-home-controls" aria-label="Consultar información">
+                <button class="mobile-feature-control mobile-feature-control--account" type="button" data-mobile-target="account" aria-label="Abrir estado de cuenta"></button>
+                <button class="mobile-feature-control mobile-feature-control--progress" type="button" data-mobile-target="progress" aria-label="Abrir avances de obra"></button>
+                <button class="mobile-feature-control mobile-feature-control--documents" type="button" data-mobile-target="documents" aria-label="Abrir documentos"></button>
+              </div>
+
+              <button class="mobile-feature-control mobile-feature-back" type="button" data-mobile-target="home" aria-label="Regresar a la pantalla principal" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+            </div>
+            <h3>App móvil para clientes</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-mobile-details" aria-hidden="true">
+            <h3>App móvil para clientes</h3>
+            <p>Tus compradores consultan el avance de su unidad, sus pagos y documentos desde su teléfono. Experiencia premium.</p>
+          </div>
         </div>
-        <h3>App móvil para clientes</h3>
-        <p>Tus compradores consultan el avance de su unidad, sus pagos y documentos desde su teléfono. Experiencia premium.</p>
       </div>
-      <div class="feature-card anim anim--scale anim-delay-1">
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      <div class="feature-card feature-card--progress anim anim--scale anim-delay-1">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="construction-progress-mockup" role="img" aria-label="Avance general de obra, etapas constructivas y evidencias fotográficas">
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(16% 65% 36% 3%); --piece-origin: 20% 40%; --piece-delay: 0ms; --piece-z: 2;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(17% 20% 67% 31%); --piece-origin: 56% 25%; --piece-delay: 160ms; --piece-z: 3;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(31% 20% 54% 31%); --piece-origin: 56% 38%; --piece-delay: 320ms; --piece-z: 3;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(44% 20% 40% 31%); --piece-origin: 56% 52%; --piece-delay: 480ms; --piece-z: 3;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(7% 7% 74% 54%); --piece-origin: 75% 16%; --piece-delay: 640ms; --piece-z: 5;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(58% 66% 27% 5%); --piece-origin: 19% 65%; --piece-delay: 800ms; --piece-z: 5;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(61% 48% 1% 12%); --piece-origin: 32% 79%; --piece-delay: 960ms; --piece-z: 1;" />
+              <img class="construction-progress-piece" src="Assets/Mockups/avance-de-obra-1280.webp" alt="" width="1280" height="790" loading="lazy" decoding="async" aria-hidden="true" style="--piece-clip: inset(60% 11% 1% 48%); --piece-origin: 69% 79%; --piece-delay: 1120ms; --piece-z: 1;" />
+            </div>
+            <h3>Avance de obra</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-progress-details" aria-hidden="true">
+            <h3>Avance de obra</h3>
+            <p>Seguimiento de etapas constructivas con porcentajes, evidencias fotográficas y notificaciones automáticas a compradores.</p>
+          </div>
         </div>
-        <h3>Avance de obra</h3>
-        <p>Seguimiento de etapas constructivas con porcentajes, evidencias fotográficas y notificaciones automáticas a compradores.</p>
       </div>
-      <div class="feature-card anim anim--scale anim-delay-2">
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="9" rx="1"/><rect x="13" y="3" width="9" height="9" rx="1"/><rect x="2" y="14" width="9" height="7" rx="1"/><rect x="13" y="14" width="9" height="7" rx="1"/></svg>
+      <div class="feature-card feature-card--marketplace anim anim--scale anim-delay-2">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="marketplace-mockup">
+              <img src="Assets/Mockups/Marketplace-1280.webp" srcset="Assets/Mockups/Marketplace-960.webp 960w, Assets/Mockups/Marketplace-1280.webp 1280w" sizes="(max-width: 580px) 90vw, 355px" alt="Marketplace de desarrollos con mapa, disponibilidad y detalles del proyecto" width="1280" height="790" loading="lazy" decoding="async" />
+              <button class="marketplace-marker marketplace-marker--main" type="button" aria-label="Ver propiedad industrial" aria-expanded="false" data-marketplace-position="main" data-marketplace-type="Industrial" data-marketplace-name="Parque Industrial Norte" data-marketplace-meta="3 naves disponibles" data-marketplace-price="Desde $4.2 M" style="--marker-delay: 0ms"></button>
+              <button class="marketplace-marker marketplace-marker--left" type="button" aria-label="Ver propiedad habitacional" aria-expanded="false" data-marketplace-position="left" data-marketplace-type="Habitacional" data-marketplace-name="Residencial Castellana" data-marketplace-meta="8 departamentos disponibles" data-marketplace-price="Desde $3.85 M" style="--marker-delay: 420ms"></button>
+              <button class="marketplace-marker marketplace-marker--right" type="button" aria-label="Ver propiedad comercial" aria-expanded="false" data-marketplace-position="right" data-marketplace-type="Comercial" data-marketplace-name="Distrito Tradere" data-marketplace-meta="5 locales disponibles" data-marketplace-price="Desde $2.95 M" style="--marker-delay: 840ms"></button>
+              <div class="marketplace-property-popover" role="status" aria-live="polite" hidden>
+                <span class="marketplace-property-type"></span>
+                <strong class="marketplace-property-name"></strong>
+                <span class="marketplace-property-meta"></span>
+                <span class="marketplace-property-price"></span>
+              </div>
+              <div class="marketplace-filter-control">
+                <button class="marketplace-filter" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="marketplace-filter-label">Todos los proyectos</span>
+                  <svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5L6 6.5 11 1.5" /></svg>
+                </button>
+                <div class="marketplace-filter-menu" role="listbox" aria-label="Filtrar desarrollos" hidden>
+                  <button type="button" role="option" aria-selected="false" data-marketplace-filter="Departamentos">Departamentos</button>
+                  <button type="button" role="option" aria-selected="false" data-marketplace-filter="Locales">Locales</button>
+                  <button type="button" role="option" aria-selected="false" data-marketplace-filter="Industrial">Industrial</button>
+                </div>
+              </div>
+            </div>
+            <h3>Marketplace de desarrollos</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-marketplace-details" aria-hidden="true">
+            <h3>Marketplace de desarrollos</h3>
+            <p>Portal donde los compradores pueden explorar todos los desarrollos activos de tu empresa: disponibilidad, tipologías, precios y avance de cada proyecto.</p>
+          </div>
         </div>
-        <h3>Marketplace de desarrollos</h3>
-        <p>Portal donde los compradores pueden explorar todos los desarrollos activos de tu empresa: disponibilidad, tipologías, precios y avance de cada proyecto.</p>
       </div>
-      <div class="feature-card anim anim--scale anim-delay-3">
-        <div class="feature-icon">
-          <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      <div class="feature-card feature-card--payments anim anim--scale anim-delay-3">
+        <div class="feature-card-inner">
+          <div class="feature-card-face feature-card-front">
+            <div class="feature-card-mockup feature-card-mockup--payments payments-mockup">
+              <img src="Assets/Mockups/Pagos1-1035.webp" alt="Vista del control de pagos" width="1035" height="727" loading="lazy" decoding="async" />
+              <span class="payment-row-hotspot" aria-hidden="true" style="--payment-delay: 500ms"></span>
+              <span class="payment-row-hotspot" aria-hidden="true" style="--payment-delay: 1200ms"></span>
+              <span class="payment-row-hotspot" aria-hidden="true" style="--payment-delay: 1900ms"></span>
+              <span class="payment-history-hotspot" aria-hidden="true"></span>
+            </div>
+            <h3>Control de pagos</h3>
+          </div>
+          <div class="feature-card-face feature-card-back" id="feature-payments-details" aria-hidden="true">
+            <h3>Control de pagos</h3>
+            <p>Programas de pago personalizados, alertas de vencimiento, registro de cobros y estados de cuenta por cliente.</p>
+          </div>
         </div>
-        <h3>Control de pagos</h3>
-        <p>Programas de pago personalizados, alertas de vencimiento, registro de cobros y estados de cuenta por cliente.</p>
       </div>
     </div>
+    <p class="features-disclaimer">Los mockups mostrados son únicamente ilustrativos y pueden diferir de la interfaz actual de la plataforma.</p>
   </div>
 </section>
 
 <section id="benefits-dev">
   <div class="container">
-    <div class="benefits-grid">
-      <div>
-        <div class="tag">Para desarrolladores</div>
-        <h2 class="section-title anim">Lo que cambia con Devio.</h2>
-        <p class="section-sub anim anim-delay-1">Devio libera a tu equipo de tareas administrativas para enfocarse en lo que genera valor: vender y construir.</p>
-        <div class="benefit-list">
-          <div class="benefit-item anim anim-delay-1">
-            <div class="benefit-item-icon">
-              <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div>
-              <h4>Visibilidad total del negocio</h4>
-              <p>Un solo panel con el estado real de cada proyecto: ventas, cobranza, avances de obra y clientes.</p>
-            </div>
-          </div>
-          <div class="benefit-item anim anim-delay-2">
-            <div class="benefit-item-icon">
-              <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
-              <h4>Cero errores operativos</h4>
-              <p>Elimina duplicidades, errores en precios y pagos perdidos gracias a la automatización.</p>
-            </div>
-          </div>
-          <div class="benefit-item anim anim-delay-3">
-            <div class="benefit-item-icon">
-              <svg fill="none" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <div>
-              <h4>Reportes en segundos</h4>
-              <p>Lo que antes tardaba días en consolidar, ahora está disponible al instante para cualquier tomador de decisiones.</p>
-            </div>
+    <div class="benefits-dev-header">
+      <h2 class="section-title benefits-dev-title anim">Lo que cambia con Devio</h2>
+      <p class="section-sub benefits-dev-subtitle anim anim-delay-1">Menos tareas administrativas. Más control para vender y construir.</p>
+    </div>
+
+    <div class="benefits-dev-grid">
+      <article class="benefits-dev-item anim">
+        <div class="benefits-dev-icon" aria-hidden="true">
+          <div class="benefits-dev-icon-face">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 40V29h7v11M20.5 40V20h7v20M34 40V11h7v29M5 40h38" />
+            </svg>
           </div>
         </div>
-      </div>
-      <div>
-        <div class="metrics-panel anim anim--down anim-delay-1">
-          <div>
-            <div class="panel-title">Impacto en tu operación</div>
-            <div class="panel-sub">Resultados promedio en los primeros 90 días</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-header">
-              <span class="metric-name">Reducción de tiempo administrativo</span>
-              <span class="metric-val">−65%</span>
-            </div>
-            <div class="metric-bar"><div class="metric-fill" data-width="65"></div></div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-header">
-              <span class="metric-name">Aumento en cierres de venta</span>
-              <span class="metric-val">+38%</span>
-            </div>
-            <div class="metric-bar"><div class="metric-fill" data-width="38"></div></div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-header">
-              <span class="metric-name">Mejora en recuperación de cartera</span>
-              <span class="metric-val">+52%</span>
-            </div>
-            <div class="metric-bar"><div class="metric-fill" data-width="52"></div></div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-header">
-              <span class="metric-name">Satisfacción del equipo de ventas</span>
-              <span class="metric-val">94%</span>
-            </div>
-            <div class="metric-bar"><div class="metric-fill" data-width="94"></div></div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-header">
-              <span class="metric-name">Errores operativos eliminados</span>
-              <span class="metric-val">−89%</span>
-            </div>
-            <div class="metric-bar"><div class="metric-fill" data-width="89"></div></div>
+        <div class="benefits-dev-value">100%</div>
+        <h3>Visibilidad del negocio</h3>
+        <p>Ventas, cobranza, avances y<br class="benefits-dev-desktop-break" /> clientes en un solo lugar.</p>
+      </article>
+
+      <article class="benefits-dev-item anim anim-delay-1">
+        <div class="benefits-dev-icon" aria-hidden="true">
+          <div class="benefits-dev-icon-face">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="17" />
+              <path d="M24 13v12l8 5" />
+            </svg>
           </div>
         </div>
-      </div>
+        <div class="benefits-dev-value">Al instante</div>
+        <h3>Reportes centralizados</h3>
+        <p>Información lista para tomar<br class="benefits-dev-desktop-break" /> decisiones sin consolidar archivos.</p>
+      </article>
+
+      <article class="benefits-dev-item anim anim-delay-2">
+        <div class="benefits-dev-icon" aria-hidden="true">
+          <div class="benefits-dev-icon-face">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 7l14 5v10c0 9-5.8 14.9-14 19-8.2-4.1-14-10-14-19V12l14-5z" />
+            </svg>
+          </div>
+        </div>
+        <div class="benefits-dev-value">Menos errores</div>
+        <h3>Operación conectada</h3>
+        <p>Precios, pagos y documentos<br class="benefits-dev-desktop-break" /> siempre actualizados.</p>
+      </article>
+
+      <article class="benefits-dev-item anim anim-delay-3">
+        <div class="benefits-dev-icon" aria-hidden="true">
+          <div class="benefits-dev-icon-face">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="19" cy="17" r="6" />
+              <circle cx="32.5" cy="19" r="4.5" />
+              <path d="M8 38v-3c0-5.5 4.8-9 11-9s11 3.5 11 9v3H8zM32 28c5.3.2 8 3.1 8 7.5V38" />
+            </svg>
+          </div>
+        </div>
+        <div class="benefits-dev-value">24/7</div>
+        <h3>Clientes informados</h3>
+        <p>Cada comprador consulta su<br class="benefits-dev-desktop-break" /> propiedad desde la app.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -849,11 +982,11 @@
 
         <details class="faq-item">
           <summary>
-            <span>¿Qué pueden consultar los compradores?</span>
+            <span>¿Devio funciona para desarrollos comerciales, industriales y habitacionales?</span>
             <span class="faq-plus" aria-hidden="true"></span>
           </summary>
           <div class="faq-answer">
-            <p>Desde la app pueden revisar avance de obra, documentos e información relevante que tu equipo publique para su unidad.</p>
+            <p>Sí. Devio se adapta a desarrollos comerciales, industriales y habitacionales, centralizando la información, el inventario, las ventas, los pagos y el avance de cada proyecto.</p>
           </div>
         </details>
       </div>
@@ -910,34 +1043,42 @@
           <div class="form-title">Conoce Devio</div>
           <div class="form-sub">Responderemos en menos de 24 horas</div>
           <form id="leadForm" novalidate>
-            <div class="form-group">
-              <label>Nombre completo</label>
-              <input type="text" id="fname" name="name" placeholder="Ej. Carlos Martínez" required />
+            <div class="form-honeypot" aria-hidden="true">
+              <label for="website">No completes este campo</label>
+              <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off" />
             </div>
             <div class="form-group">
-              <label>Correo electrónico</label>
-              <input type="email" id="femail" name="email" placeholder="carlos@desarrolladora.mx" required />
+              <label for="fname">Nombre completo</label>
+              <input type="text" id="fname" name="name" placeholder="Ej. Carlos Martínez" autocomplete="name" minlength="2" maxlength="35" required />
             </div>
             <div class="form-group">
-              <label>Teléfono</label>
-              <input type="tel" id="fphone" name="phone" placeholder="Ej. 33 1234 5678" required />
+              <label for="femail">Correo electrónico</label>
+              <input type="email" id="femail" name="email" placeholder="carlos@desarrolladora.mx" autocomplete="email" inputmode="email" maxlength="50" required />
             </div>
             <div class="form-group">
-              <label>Empresa / Desarrolladora</label>
-              <input type="text" id="fcompany" name="company" placeholder="Nombre de tu empresa" required />
+              <label for="fphone">Teléfono</label>
+              <input type="tel" id="fphone" name="phone" placeholder="Ej. 3312345678" autocomplete="tel" inputmode="numeric" pattern="[0-9]{10}" minlength="10" maxlength="10" required />
             </div>
             <div class="form-group">
-              <label>Número de proyectos activos</label>
-              <select name="projects">
-                <option disabled selected>Selecciona una opción</option>
+              <label for="fcompany">Empresa / Desarrolladora</label>
+              <input type="text" id="fcompany" name="company" placeholder="Nombre de tu empresa" autocomplete="organization" minlength="2" maxlength="40" required />
+            </div>
+            <div class="form-group">
+              <label for="fprojects">Número de proyectos activos</label>
+              <select id="fprojects" name="projects" autocomplete="off" required>
+                <option value="" disabled selected>Selecciona una opción</option>
                 <option value="1">1 proyecto</option>
                 <option value="2-5">2 a 5 proyectos</option>
                 <option value="6-10">6 a 10 proyectos</option>
                 <option value="10+">Más de 10 proyectos</option>
               </select>
             </div>
+            <div class="form-consent">
+              <input type="checkbox" id="fprivacy" name="privacy_accepted" value="yes" required />
+              <label for="fprivacy">He leído y acepto el <a href="privacidad.html">Aviso de privacidad</a>.</label>
+            </div>
             <button type="submit" class="form-submit">Solicitar demo gratuita →</button>
-            <p class="form-note">Al enviar aceptas nuestra política de privacidad.</p>
+            <p class="form-note">Usaremos tus datos únicamente para atender tu solicitud.</p>
           </form>
           <div class="form-success" id="formSuccess">
             <div class="form-success-icon">
@@ -997,6 +1138,9 @@
             <a href="https://facebook.com" class="fsocial" aria-label="Facebook" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
+            <a href="https://www.linkedin.com/company/deviomx/home/?viewAsMember=true" class="fsocial" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.047c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 110-4.124 2.062 2.062 0 010 4.124zM7.119 20.452H3.554V9h3.565v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
           </div>
         </div>
 
@@ -1028,10 +1172,10 @@
           <a href="mailto:contacto@deviomx.com" class="footer-email">contacto@deviomx.com</a>
           <div class="footer-apps">
             <a href="https://apps.apple.com/us/app/devio/id6760320536" class="app-badge" target="_blank" rel="noopener" aria-label="Descargar en App Store">
-              <img src="Assets/badge-appstore.svg" alt="Download on the App Store" height="30" width="101" loading="lazy" />
+              <img src="Assets/badge-appstore.svg" alt="Download on the App Store" height="30" width="101" loading="lazy" decoding="async" />
             </a>
             <a href="https://play.google.com/store/apps/details?id=com.deviomx.app&amp;hl=es_MX" class="app-badge" target="_blank" rel="noopener" aria-label="Descargar en Google Play">
-              <img src="Assets/badge-googleplay.svg" alt="Get it on Google Play" height="30" width="101" loading="lazy" />
+              <img src="Assets/badge-googleplay.svg" alt="Get it on Google Play" height="30" width="101" loading="lazy" decoding="async" />
             </a>
           </div>
         </div>

@@ -84,18 +84,324 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
 animEls.forEach(el => observer.observe(el));
 
-const metricFills = document.querySelectorAll('.metric-fill');
-const metricsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const fill = entry.target;
-      const width = fill.getAttribute('data-width');
-      fill.style.width = width + '%';
-      metricsObserver.unobserve(fill);
+const analyticsCard = document.querySelector('.feature-card--analytics');
+if (analyticsCard) {
+  const counters = analyticsCard.querySelectorAll('[data-value]');
+  let analyticsAnimationFrame = 0;
+
+  function updateAnalyticsCounters(progress) {
+    counters.forEach(counter => {
+      const value = Number(counter.dataset.value);
+      const decimals = Number(counter.dataset.decimals || 0);
+      const prefix = counter.dataset.prefix || '';
+      const suffix = counter.dataset.suffix || '';
+      counter.textContent = `${prefix}${(value * progress).toFixed(decimals)}${suffix}`;
+    });
+  }
+
+  function playAnalyticsAnimation() {
+    analyticsCard.classList.add('is-dashboard-animated');
+    if (reducedMotion) {
+      updateAnalyticsCounters(1);
+      return;
+    }
+
+    const duration = 5200;
+    const startTime = performance.now();
+    function updateCounters(now) {
+      const elapsed = Math.min(1, (now - startTime) / duration);
+      const eased = elapsed * elapsed * (3 - (2 * elapsed));
+      updateAnalyticsCounters(eased);
+      if (elapsed < 1) analyticsAnimationFrame = requestAnimationFrame(updateCounters);
+      else analyticsAnimationFrame = 0;
+    }
+    analyticsAnimationFrame = requestAnimationFrame(updateCounters);
+  }
+
+  function replayAnalyticsAnimation() {
+    if (analyticsAnimationFrame) cancelAnimationFrame(analyticsAnimationFrame);
+    analyticsAnimationFrame = 0;
+    analyticsCard.classList.add('is-dashboard-resetting');
+    analyticsCard.classList.remove('is-dashboard-animated');
+    updateAnalyticsCounters(0);
+    void analyticsCard.offsetWidth;
+    requestAnimationFrame(() => {
+      analyticsCard.classList.remove('is-dashboard-resetting');
+      void analyticsCard.offsetWidth;
+      requestAnimationFrame(playAnalyticsAnimation);
+    });
+  }
+
+  updateAnalyticsCounters(0);
+  if (reducedMotion) {
+    playAnalyticsAnimation();
+  } else {
+    const analyticsObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      analyticsObserver.unobserve(analyticsCard);
+      playAnalyticsAnimation();
+    }, { threshold: 0.35 });
+    analyticsObserver.observe(analyticsCard);
+  }
+  analyticsCard.addEventListener('featurefrontshow', replayAnalyticsAnimation);
+}
+
+const replayableFeatureAnimations = new Map([
+  [document.querySelector('.feature-card--inventory'), 'is-inventory-animated'],
+  [document.querySelector('.feature-card--payments'), 'is-payments-animated'],
+  [document.querySelector('.feature-card--progress'), 'is-progress-animated'],
+  [document.querySelector('.feature-card--marketplace'), 'is-marketplace-animated']
+].filter(([card]) => card));
+
+if (!reducedMotion && replayableFeatureAnimations.size) {
+  function playFeatureAnimation(card) {
+    const className = replayableFeatureAnimations.get(card);
+    card.classList.remove(className);
+    void card.offsetWidth;
+    requestAnimationFrame(() => card.classList.add(className));
+  }
+
+  const featureAnimationObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      featureAnimationObserver.unobserve(entry.target);
+      playFeatureAnimation(entry.target);
+    });
+  }, { threshold: 0.35 });
+
+  replayableFeatureAnimations.forEach((className, card) => {
+    featureAnimationObserver.observe(card);
+    card.addEventListener('featurefrontshow', () => playFeatureAnimation(card));
+  });
+}
+
+const mobileFeatureCard = document.querySelector('.feature-card--mobile');
+if (mobileFeatureCard) {
+  let mobileIntroTimer = 0;
+
+  function playMobileFeatureAnimation(isFirstLoad = false) {
+    window.clearTimeout(mobileIntroTimer);
+    mobileFeatureCard.classList.remove('is-mobile-animated');
+    mobileFeatureCard.classList.remove('is-mobile-first-load');
+    void mobileFeatureCard.offsetWidth;
+    requestAnimationFrame(() => {
+      mobileFeatureCard.classList.remove('is-mobile-first-pending');
+      mobileFeatureCard.classList.add('is-mobile-animated');
+      if (!isFirstLoad) return;
+      mobileFeatureCard.classList.add('is-mobile-first-load');
+      mobileIntroTimer = window.setTimeout(() => {
+        mobileFeatureCard.classList.remove('is-mobile-first-load');
+        mobileFeatureCard.classList.remove('is-mobile-animated');
+      }, 6500);
+    });
+  }
+
+  if (reducedMotion) {
+    mobileFeatureCard.classList.remove('is-mobile-first-pending');
+  } else {
+    const mobileFeatureObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      mobileFeatureObserver.unobserve(mobileFeatureCard);
+      playMobileFeatureAnimation(true);
+    }, { threshold: 0.35 });
+    mobileFeatureObserver.observe(mobileFeatureCard);
+    mobileFeatureCard.addEventListener('featurefrontshow', () => playMobileFeatureAnimation(false));
+  }
+}
+
+const featuresGrid = document.querySelector('.features-grid');
+const marketplaceCard = document.querySelector('.feature-card--marketplace');
+if (marketplaceCard) {
+  const filterButton = marketplaceCard.querySelector('.marketplace-filter');
+  const filterLabel = marketplaceCard.querySelector('.marketplace-filter-label');
+  const filterMenu = marketplaceCard.querySelector('.marketplace-filter-menu');
+  const filterOptions = marketplaceCard.querySelectorAll('[data-marketplace-filter]');
+  const propertyMarkers = marketplaceCard.querySelectorAll('.marketplace-marker');
+  const propertyPopover = marketplaceCard.querySelector('.marketplace-property-popover');
+  const propertyType = propertyPopover.querySelector('.marketplace-property-type');
+  const propertyName = propertyPopover.querySelector('.marketplace-property-name');
+  const propertyMeta = propertyPopover.querySelector('.marketplace-property-meta');
+  const propertyPrice = propertyPopover.querySelector('.marketplace-property-price');
+  let activePropertyMarker = null;
+
+  function closeMarketplaceProperty() {
+    propertyMarkers.forEach(marker => marker.setAttribute('aria-expanded', 'false'));
+    activePropertyMarker = null;
+    propertyPopover.hidden = true;
+    propertyPopover.className = 'marketplace-property-popover';
+  }
+
+  function showMarketplaceProperty(marker) {
+    if (activePropertyMarker === marker) {
+      closeMarketplaceProperty();
+      return;
+    }
+    activePropertyMarker = marker;
+    propertyMarkers.forEach(item => item.setAttribute('aria-expanded', String(item === marker)));
+    propertyType.textContent = marker.dataset.marketplaceType;
+    propertyName.textContent = marker.dataset.marketplaceName;
+    propertyMeta.textContent = marker.dataset.marketplaceMeta;
+    propertyPrice.textContent = marker.dataset.marketplacePrice;
+    propertyPopover.className = `marketplace-property-popover is-${marker.dataset.marketplacePosition}`;
+    propertyPopover.hidden = false;
+  }
+
+  function setMarketplaceFilterOpen(isOpen) {
+    if (isOpen) closeMarketplaceProperty();
+    filterButton.setAttribute('aria-expanded', String(isOpen));
+    filterMenu.hidden = !isOpen;
+  }
+
+  filterButton.addEventListener('click', event => {
+    event.stopPropagation();
+    setMarketplaceFilterOpen(filterButton.getAttribute('aria-expanded') !== 'true');
+  });
+  filterOptions.forEach(option => {
+    option.addEventListener('click', event => {
+      event.stopPropagation();
+      filterLabel.textContent = option.dataset.marketplaceFilter;
+      filterOptions.forEach(item => item.setAttribute('aria-selected', String(item === option)));
+      setMarketplaceFilterOpen(false);
+      filterButton.focus();
+    });
+  });
+  propertyMarkers.forEach(marker => {
+    marker.addEventListener('click', event => {
+      event.stopPropagation();
+      setMarketplaceFilterOpen(false);
+      showMarketplaceProperty(marker);
+    });
+    marker.addEventListener('keydown', event => {
+      event.stopPropagation();
+      if (event.key === 'Escape') {
+        closeMarketplaceProperty();
+        marker.focus();
+      }
+    });
+  });
+  marketplaceCard.querySelector('.marketplace-filter-control').addEventListener('keydown', event => {
+    event.stopPropagation();
+    if (event.key === 'Escape') {
+      setMarketplaceFilterOpen(false);
+      filterButton.focus();
     }
   });
-}, { threshold: 0.3 });
-metricFills.forEach(el => metricsObserver.observe(el));
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.marketplace-filter-control')) setMarketplaceFilterOpen(false);
+    if (!event.target.closest('.marketplace-marker')) closeMarketplaceProperty();
+  });
+  marketplaceCard.addEventListener('featurefrontshow', () => {
+    setMarketplaceFilterOpen(false);
+    closeMarketplaceProperty();
+  });
+}
+
+const mobileFeatureViewer = document.querySelector('[data-mobile-feature]');
+if (mobileFeatureViewer) {
+  const screens = mobileFeatureViewer.querySelectorAll('[data-mobile-feature-screen]');
+  const homeControls = mobileFeatureViewer.querySelector('.mobile-feature-home-controls');
+  const backControl = mobileFeatureViewer.querySelector('.mobile-feature-back');
+
+  function showMobileFeatureScreen(screenName) {
+    const nextScreen = [...screens].find(screen => screen.dataset.mobileFeatureScreen === screenName);
+    if (!nextScreen) return;
+
+    screens.forEach(screen => {
+      const isActive = screen === nextScreen;
+      screen.classList.toggle('is-active', isActive);
+      screen.setAttribute('aria-hidden', String(!isActive));
+    });
+    mobileFeatureViewer.dataset.activeScreen = screenName;
+    if (homeControls) homeControls.hidden = screenName !== 'home';
+    if (backControl) backControl.hidden = screenName === 'home';
+  }
+
+  mobileFeatureViewer.addEventListener('click', event => {
+    const control = event.target.closest('.mobile-feature-control');
+    if (!control || !mobileFeatureViewer.contains(control)) return;
+    event.stopPropagation();
+    if (mobileFeatureCard) {
+      mobileFeatureCard.classList.remove('is-mobile-first-load', 'is-mobile-animated');
+    }
+    showMobileFeatureScreen(control.dataset.mobileTarget || 'home');
+  });
+  mobileFeatureViewer.addEventListener('keydown', event => event.stopPropagation());
+}
+
+function toggleFeatureCard(card) {
+  if (card.classList.contains('is-flipping')) return;
+  const inner = card.querySelector('.feature-card-inner');
+  const front = card.querySelector('.feature-card-front');
+  const back = card.querySelector('.feature-card-back');
+  const title = front?.querySelector('h3')?.textContent.trim();
+  if (!inner || !front || !back || !title) return;
+
+  card.classList.add('is-flipping');
+  const isFlipped = card.classList.toggle('is-flipped');
+  card.setAttribute('aria-expanded', String(isFlipped));
+  card.setAttribute(
+    'aria-label',
+    `${isFlipped ? 'Ocultar' : 'Ver'} descripción de ${title}`
+  );
+  if (isFlipped) card.setAttribute('aria-describedby', back.id);
+  else card.removeAttribute('aria-describedby');
+  front.setAttribute('aria-hidden', String(isFlipped));
+  back.setAttribute('aria-hidden', String(!isFlipped));
+
+  let flipFinished = false;
+  let flipFallback = 0;
+  const finishFlip = () => {
+    if (flipFinished) return;
+    flipFinished = true;
+    window.clearTimeout(flipFallback);
+    inner.removeEventListener('transitionend', handleFlipEnd);
+    card.classList.remove('is-flipping');
+    if (!card.classList.contains('is-flipped')) {
+      card.dispatchEvent(new CustomEvent('featurefrontshow'));
+    }
+  };
+  const handleFlipEnd = event => {
+    if (event.target !== inner || event.propertyName !== 'transform') return;
+    finishFlip();
+  };
+
+  if (reducedMotion) {
+    requestAnimationFrame(finishFlip);
+  } else {
+    inner.addEventListener('transitionend', handleFlipEnd);
+    flipFallback = window.setTimeout(finishFlip, 720);
+  }
+}
+
+featuresGrid?.querySelectorAll('.feature-card').forEach(card => {
+  const front = card.querySelector('.feature-card-front');
+  const back = card.querySelector('.feature-card-back');
+  const title = front?.querySelector('h3')?.textContent.trim();
+  if (!front || !back || !title) return;
+  card.tabIndex = 0;
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-expanded', 'false');
+  card.setAttribute('aria-controls', back.id);
+  card.setAttribute('aria-label', `Ver descripción de ${title}`);
+  front.setAttribute('aria-hidden', 'false');
+  back.setAttribute('aria-hidden', 'true');
+});
+
+featuresGrid?.addEventListener('click', (event) => {
+  const card = event.target.closest('.feature-card');
+  if (!card || !featuresGrid.contains(card)) return;
+  if (event.target.closest('.payment-history-hotspot, .inventory-total-hotspot, .analytics-export-hotspot, .analytics-bar-hotspot, .mobile-feature-control, .marketplace-filter-control, .marketplace-marker')) return;
+  toggleFeatureCard(card);
+});
+
+featuresGrid?.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  if (event.target.closest('.mobile-feature-control, .marketplace-filter-control, .marketplace-marker')) return;
+  const card = event.target.closest('.feature-card');
+  if (!card || !featuresGrid.contains(card)) return;
+  event.preventDefault();
+  toggleFeatureCard(card);
+});
 
 (function() {
   const rotator = document.querySelector('.client-logo-rotator');
@@ -206,25 +512,59 @@ if (howSection) ambientMotionObserver.observe(howSection);
 
 const leadForm = document.getElementById('leadForm');
 const formSuccess = document.getElementById('formSuccess');
+const leadEmail = document.getElementById('femail');
+const leadPhone = document.getElementById('fphone');
+const leadRequiredFields = [...leadForm.querySelectorAll('input[required], select[required]')];
+const leadTrimFields = [...leadForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]')]
+  .filter(input => input.name !== '_gotcha');
+const leadSubmitButton = leadForm.querySelector('button[type="submit"]');
+const leadEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function validateLeadEmail() {
+  const isValid = leadEmailPattern.test(leadEmail.value.trim());
+  leadEmail.setCustomValidity(isValid || !leadEmail.value ? '' : 'Ingresa un correo electrónico válido.');
+}
+
+function validateLeadPhone() {
+  const isValid = /^\d{10}$/.test(leadPhone.value);
+  leadPhone.setCustomValidity(isValid || !leadPhone.value ? '' : 'Ingresa un teléfono de 10 dígitos.');
+}
+
+leadEmail.addEventListener('input', validateLeadEmail);
+leadPhone.addEventListener('input', () => {
+  leadPhone.value = leadPhone.value.replace(/\D/g, '').slice(0, 10);
+  validateLeadPhone();
+});
+function clearLeadInvalidState(event) {
+  const field = event.target;
+  if (!field.matches('input[required], select[required]') || !field.checkValidity()) return;
+  field.classList.remove('is-invalid');
+  field.removeAttribute('aria-invalid');
+}
+leadForm.addEventListener('input', clearLeadInvalidState);
+leadForm.addEventListener('change', clearLeadInvalidState);
 leadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const fname = document.getElementById('fname').value.trim();
-  const femail = document.getElementById('femail').value.trim();
-  const fphone = document.getElementById('fphone').value.trim();
-  const fcompany = document.getElementById('fcompany').value.trim();
-  if (!fname || !femail || !fphone || !fcompany) {
-    const inputs = leadForm.querySelectorAll('input[required]');
-    inputs.forEach(input => {
-      if (!input.value.trim()) {
-        input.style.borderColor = '#F03D30';
-        input.addEventListener('input', () => { input.style.borderColor = ''; }, { once: true });
-      }
-    });
+  leadTrimFields.forEach(input => { input.value = input.value.trim(); });
+  validateLeadEmail();
+  validateLeadPhone();
+  const invalidFields = [];
+  leadRequiredFields.forEach(field => {
+    const isInvalid = !field.checkValidity();
+    field.classList.toggle('is-invalid', isInvalid);
+    if (isInvalid) {
+      field.setAttribute('aria-invalid', 'true');
+      invalidFields.push(field);
+    } else {
+      field.removeAttribute('aria-invalid');
+    }
+  });
+  if (invalidFields.length) {
+    invalidFields[0]?.focus({ preventScroll: true });
     return;
   }
-  const btn = leadForm.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Enviando…';
+  leadSubmitButton.disabled = true;
+  leadSubmitButton.textContent = 'Enviando…';
   const data = new FormData(leadForm);
   try {
     const res = await fetch('https://formspree.io/f/mqerzdna', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
@@ -235,8 +575,8 @@ leadForm.addEventListener('submit', async (e) => {
       throw new Error('server');
     }
   } catch {
-    btn.disabled = false;
-    btn.textContent = 'Solicitar demo gratuita →';
+    leadSubmitButton.disabled = false;
+    leadSubmitButton.textContent = 'Solicitar demo gratuita →';
     alert('Hubo un error al enviar. Intenta de nuevo o contáctanos por WhatsApp.');
   }
 });
@@ -247,7 +587,8 @@ leadForm.addEventListener('submit', async (e) => {
 
   const panels = story.querySelectorAll('.app-panel');
   const slides = story.querySelectorAll('.phone-story-slide');
-  const dots   = story.querySelectorAll('.story-dot');
+  const dotsContainer = story.querySelector('.story-dots');
+  const dots   = [...story.querySelectorAll('.story-dot')];
   const notificationSets = story.querySelectorAll('.phone-notification-set');
   const phoneShell = story.querySelector('.phone-story-shell');
   const slideLoadPromises = new Map();
@@ -308,6 +649,7 @@ leadForm.addEventListener('submit', async (e) => {
 
   function applyStep(step) {
     current = step;
+    story.dataset.activeStep = String(step + 1);
     panels.forEach((p, i) => p.classList.toggle('active', i === step));
     slides.forEach((s, i) => s.classList.toggle('active', i === step));
     notificationSets.forEach((set) => {
@@ -378,13 +720,22 @@ leadForm.addEventListener('submit', async (e) => {
   setStep(0);
   updateStory();
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('pointerenter', () => { void loadSlide(i); }, { passive: true });
-    dot.addEventListener('focus', () => { void loadSlide(i); });
-    dot.addEventListener('touchstart', () => { void loadSlide(i); }, { passive: true });
-    dot.addEventListener('click', () => {
-      setStep(i);
-    });
+  function getDotStep(target) {
+    const dot = target.closest('.story-dot');
+    return dot ? dots.indexOf(dot) : -1;
+  }
+
+  function preloadDot(event) {
+    const step = getDotStep(event.target);
+    if (step >= 0) void loadSlide(step);
+  }
+
+  dotsContainer.addEventListener('pointerover', preloadDot, { passive: true });
+  dotsContainer.addEventListener('focusin', preloadDot);
+  dotsContainer.addEventListener('touchstart', preloadDot, { passive: true });
+  dotsContainer.addEventListener('click', (event) => {
+    const step = getDotStep(event.target);
+    if (step >= 0) setStep(step);
   });
 })();
 
