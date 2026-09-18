@@ -665,8 +665,23 @@ section { padding: 112px 0; }
   justify-content: center;
 }
 .sol-card-icon svg { width: 20px; height: 20px; stroke: var(--gold); }
+.sol-card-copy { min-width: 0; flex: 1; }
 .sol-card-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
 .sol-card-sub { font-size: 12px; color: rgba(var(--white-rgb),0.45); }
+.sol-card--coming-soon { border-style: dashed; }
+.sol-card-status {
+  flex-shrink: 0;
+  padding: 5px 8px;
+  border: 1px solid rgba(var(--green-rgb),.35);
+  border-radius: 999px;
+  background: rgba(var(--green-rgb),.12);
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
 
 @media (min-width: 901px) {
   body > section#solution {
