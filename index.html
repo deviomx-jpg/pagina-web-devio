@@ -28,7 +28,7 @@
   />
   <link rel="preload" href="Assets/Fonts/Montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="Assets/Fonts/PowerGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=20260917-87" />
+  <link rel="stylesheet" href="styles.css?v=20260918-90" />
   <script src="script.js?v=20260917-39" defer></script>
   <script type="application/ld+json">
   [
@@ -112,7 +112,14 @@
 
 <section id="hero">
   <div class="hero-bg">
-    <div class="hero-grid-lines"></div>
+    <div class="hero-landscape" aria-hidden="true">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" focusable="false">
+        <path class="hero-landscape-layer hero-landscape-layer--back" d="M0 315L292 236L554 338L842 270L1112 184L1440 232V900H0Z"/>
+        <path class="hero-landscape-layer hero-landscape-layer--middle" d="M0 510L256 422L528 500L790 382L1067 424L1440 312V900H0Z"/>
+        <path class="hero-landscape-layer hero-landscape-layer--front" d="M0 704L246 606L493 684L770 548L1042 618L1440 494V900H0Z"/>
+        <path class="hero-landscape-ridge" d="M0 510L256 422L528 500L790 382L1067 424L1440 312"/>
+      </svg>
+    </div>
     <div class="hero-circle hero-circle-1"></div>
     <div class="hero-circle hero-circle-2"></div>
     <div class="hero-circle hero-circle-3"></div>
