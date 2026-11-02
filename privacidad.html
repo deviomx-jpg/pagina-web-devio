@@ -1,6 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4BZ393D9DM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4BZ393D9DM');
+</script>
+<script>
+  document.addEventListener('click', function (event) {
+    const target = event.target.closest('a, button, input[type="submit"]');
+    if (!target) return;
+
+    const href = target.getAttribute('href') || '';
+    const text = (target.textContent || target.value || '').trim().toLowerCase();
+
+    if (/^https?:\/\/(?:wa\.me|api\.whatsapp\.com)\//i.test(href)) {
+      gtag('event', 'clic_whatsapp');
+      return;
+    }
+
+    if (/^mailto:contacto@deviomx\.com(?:\?|$)/i.test(href)) {
+      gtag('event', 'clic_correo');
+      return;
+    }
+
+    if (/^https?:\/\/(?:apps\.apple\.com|play\.google\.com)\//i.test(href)) {
+      gtag('event', 'clic_descarga_app');
+      return;
+    }
+
+    if (/(?:agendar|agenda|solicitar)\s+(?:tu\s+)?demo/i.test(text)) {
+      gtag('event', 'agendar_demo');
+    }
+  });
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aviso de Privacidad — Devio</title>
