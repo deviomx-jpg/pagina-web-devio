@@ -3451,3 +3451,98 @@ footer {
   .faq-plus::before,
   .faq-plus::after { transition: none; }
 }
+
+/* Selector de inicio de sesión */
+.login-selector { position: relative; }
+.login-selector-trigger::after {
+  content: '';
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-top: 6px solid currentColor;
+  transition: transform .18s var(--ease);
+}
+.login-selector.is-open .login-selector-trigger::after {
+  transform: rotate(180deg);
+}
+.login-selector::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 226px;
+  height: 10px;
+}
+.login-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 110;
+  width: 226px;
+  padding: 7px;
+  border: 1px solid rgba(var(--navy-rgb),.1);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 16px 40px rgba(var(--navy-dark-rgb),.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease, transform .18s var(--ease);
+}
+.login-selector.is-open .login-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+.login-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color .18s ease, background-color .18s ease;
+}
+.login-dropdown-option:hover,
+.login-dropdown-option:focus-visible {
+  background: rgba(var(--green-rgb),.13);
+  color: var(--navy-deep);
+  outline: none;
+}
+.login-dropdown-option svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--gold2);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 900px) {
+  .mobile-menu-actions { align-items: flex-start; }
+  .mobile-menu-actions .login-selector-trigger {
+    min-height: 44px;
+    color: rgba(var(--white-rgb),.7);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .mobile-menu-actions .login-selector::after { display: none; }
+  .mobile-menu-actions .login-dropdown {
+    right: auto;
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-dropdown { transition: none; }
+}

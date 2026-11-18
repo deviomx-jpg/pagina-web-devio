@@ -756,3 +756,45 @@ setTimeout(() => {
     btn.classList.add('wa-visible');
   }
 }, 200);
+
+const loginSelectors = document.querySelectorAll('.login-selector');
+
+function setLoginSelectorOpen(selector, isOpen) {
+  selector.classList.toggle('is-open', isOpen);
+  selector.querySelector('.login-selector-trigger')?.setAttribute('aria-expanded', String(isOpen));
+}
+
+loginSelectors.forEach(selector => {
+  const trigger = selector.querySelector('.login-selector-trigger');
+  if (!trigger) return;
+  let wasOpenOnPointerDown = false;
+
+  selector.addEventListener('mouseenter', () => setLoginSelectorOpen(selector, true));
+  selector.addEventListener('mouseleave', () => {
+    if (!selector.contains(document.activeElement)) setLoginSelectorOpen(selector, false);
+  });
+  selector.addEventListener('focusin', () => setLoginSelectorOpen(selector, true));
+  selector.addEventListener('focusout', () => {
+    requestAnimationFrame(() => {
+      if (!selector.contains(document.activeElement)) setLoginSelectorOpen(selector, false);
+    });
+  });
+  trigger.addEventListener('pointerdown', () => {
+    wasOpenOnPointerDown = selector.classList.contains('is-open');
+  });
+  trigger.addEventListener('click', () => {
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    setLoginSelectorOpen(selector, canHover || !wasOpenOnPointerDown);
+  });
+});
+
+document.addEventListener('click', event => {
+  loginSelectors.forEach(selector => {
+    if (!selector.contains(event.target)) setLoginSelectorOpen(selector, false);
+  });
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  loginSelectors.forEach(selector => setLoginSelectorOpen(selector, false));
+});
